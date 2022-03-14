@@ -1,10 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import { UserRepository } from "../../repositories/user.repository"
+import { UserService } from "../../services/user.service"
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  
+  const userService = new UserService()
+
   if (req.method === "POST") {
-    const userRepository = new UserRepository()
-    res.json(userRepository.createUser(req.body))
+    res.json(await userService.createUser(req.body))
+  
   } else {
     res.status(200).json({ body: "get" })
   }
