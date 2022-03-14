@@ -1,4 +1,5 @@
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
 type IRegisterPayload = {
@@ -25,8 +26,11 @@ export const RegisterForm: React.FC = () => {
             setError('passwordConfirm', {
                 message: 'Password confirmation failed.'
             });
+            return;
         }
-        console.log('data:', data);
+        const {email, name, password} = data;
+
+        await axios.post('/api/user', {email, name, password});
     };
 
     return (
