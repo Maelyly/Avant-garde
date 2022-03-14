@@ -7,8 +7,9 @@ const Register: NextPage = (props) => {
         <Flex
             align={'center'}
             justify={'center'}
-            w={'full'}
-            h={'full'}
+            w={'100%'}
+            h={'100vh'}
+            bg={'gray.600'}
         >
             <RegisterForm />
         </Flex>

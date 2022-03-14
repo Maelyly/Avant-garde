@@ -1,6 +1,13 @@
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 
+type IRegisterPayload = {
+    name: string;
+    email: string;
+    password: string;
+    passwordConfirm: string;
+}
+
 export const RegisterForm: React.FC = () => {
 
     const {
@@ -9,16 +16,22 @@ export const RegisterForm: React.FC = () => {
         formState: {
             errors,
             isSubmitting
-        }
-    } = useForm();
+        },
+        setError
+    } = useForm<IRegisterPayload>();
 
-    const onSubmit = async (data: any) => {
-        console.log('Hello From Submit:', data);
+    const onSubmit = async (data: IRegisterPayload) => {
+        if(data.password !== data.passwordConfirm) {
+            setError('passwordConfirm', {
+                message: 'Password confirmation failed.'
+            });
+        }
+        console.log('data:', data);
     };
 
     return (
         <Flex
-            dir={'column'}
+            flexDir={'column'}
             align={'center'}
             as={'form'}
             onSubmit={handleSubmit(onSubmit)}
@@ -44,7 +57,7 @@ export const RegisterForm: React.FC = () => {
                     id='email'
                     type={'email'}
                     placeholder='example@hello.com'
-                    {...register('example')}
+                    {...register('email')}
                 />
                 <FormErrorMessage>
                     {errors.email && errors.email.message}
@@ -56,11 +69,28 @@ export const RegisterForm: React.FC = () => {
                 </FormLabel>
                 <Input
                     id='password'
-                    placeholder='********'
+                    type={'password'}
+                    placeholder={'Choose a strong password'}
                     {...register('password')}
                 />
                 <FormErrorMessage>
                     {errors.password && errors.password.message}
+                </FormErrorMessage>
+            </FormControl>
+            <FormControl
+                isInvalid={!!(errors.passwordConfirm && errors.passwordConfirm.message)}
+            >
+                <FormLabel>
+                    Confirm Password
+                </FormLabel>
+                <Input
+                    id='passwordConfirm'
+                    type={'password'}
+                    placeholder={'Type your password again'}
+                    {...register('passwordConfirm')}
+                />
+                <FormErrorMessage>
+                    {errors.passwordConfirm && errors.passwordConfirm.message}
                 </FormErrorMessage>
             </FormControl>
             <Button mt={4} isLoading={isSubmitting} type='submit'>

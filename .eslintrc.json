@@ -2,6 +2,7 @@
   "extends": "next/core-web-vitals",
   "rules": {
     "no-trailing-spaces": "error",
-    "semi": ["error", "never"]
+    "semi": ["error", "always"],
+    "quotes": ["error", "single", {"avoidEscape": true}]
   }
 }
