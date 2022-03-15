@@ -1,9 +1,18 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import { useState } from 'react'
+import type { GetServerSideProps, NextPage } from 'next';
+import Head from 'next/head';
+import { useState } from 'react';
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    redirect: {
+      destination: '/register',
+      permanent: false
+    }
+  };
+};
 
 const Home: NextPage = () => {
-  const [counter, setCounter] = useState(0)
+  const [counter, setCounter] = useState(0);
 
   return (
     <>
@@ -16,12 +25,12 @@ const Home: NextPage = () => {
         {counter}
       </h1>
       <button onClick={() => {
-        setCounter(counter => counter + 1)
+        setCounter(counter => counter + 1);
       }}>
         Click
       </button>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

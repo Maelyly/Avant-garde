@@ -1,7 +1,8 @@
-import { Button, Flex, FormControl, FormErrorMessage, FormLabel,Image, Input } from '@chakra-ui/react';
+import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 import axios from 'axios';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
-import logo from '../public/avant_green.png';
+import AvantLogo from '/public/avant_white.png';
 
 type IRegisterPayload = {
     name: string;
@@ -41,7 +42,7 @@ export const RegisterForm: React.FC = () => {
             as={'form'}
             onSubmit={handleSubmit(onSubmit)}
         >
-            <Image src='/avant_white.png' boxSize='150px'/>
+            <Image src={AvantLogo} alt="AvantGard logo" width={'150px'} height={'150px'}/>
             <FormControl>
                 <FormLabel color="white">
                     Name
