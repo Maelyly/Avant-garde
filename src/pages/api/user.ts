@@ -1,16 +1,14 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { UserRepository } from '../../repositories/user.repository';
+import type { NextApiRequest, NextApiResponse } from "next"
+import { UserService } from "../../services/user.service"
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method === 'POST') {
-    const userRepository = new UserRepository();
-    let newuser = await userRepository.createUser(req.body);
-    console.log(newuser);
-    res.json(newuser);
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  
+  const userService = new UserService()
+
+  if (req.method === "POST") {
+    res.json(await userService.createUser(req.body))
+  
   } else {
-    res.status(200).json({ body: 'get' });
+    res.status(200).json({ body: "get" })
   }
 }
