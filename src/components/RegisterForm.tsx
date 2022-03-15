@@ -1,6 +1,7 @@
-import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
+import { Button, Flex, FormControl, FormErrorMessage, FormLabel,Image, Input } from '@chakra-ui/react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import logo from '../public/avant_green.png';
 
 type IRegisterPayload = {
     name: string;
@@ -40,13 +41,15 @@ export const RegisterForm: React.FC = () => {
             as={'form'}
             onSubmit={handleSubmit(onSubmit)}
         >
+            <Image src='/avant_white.png' boxSize='150px'/>
             <FormControl>
-                <FormLabel>
+                <FormLabel color="white">
                     Name
                 </FormLabel>
                 <Input
                     id='name'
                     placeholder='John Doe'
+                    color="white"
                     {...register('name')}
                 />
                 <FormErrorMessage>
@@ -54,13 +57,14 @@ export const RegisterForm: React.FC = () => {
                 </FormErrorMessage>
             </FormControl>
             <FormControl>
-                <FormLabel>
+                <FormLabel color="white">
                     Email
                 </FormLabel>
                 <Input
                     id='email'
                     type={'email'}
                     placeholder='example@hello.com'
+                    color="white"
                     {...register('email')}
                 />
                 <FormErrorMessage>
@@ -68,13 +72,14 @@ export const RegisterForm: React.FC = () => {
                 </FormErrorMessage>
             </FormControl>
             <FormControl>
-                <FormLabel>
+                <FormLabel color="white">
                     Password
                 </FormLabel>
                 <Input
                     id='password'
                     type={'password'}
                     placeholder={'Choose a strong password'}
+                    color="white"
                     {...register('password')}
                 />
                 <FormErrorMessage>
@@ -84,13 +89,14 @@ export const RegisterForm: React.FC = () => {
             <FormControl
                 isInvalid={!!(errors.passwordConfirm && errors.passwordConfirm.message)}
             >
-                <FormLabel>
+                <FormLabel color="white">
                     Confirm Password
                 </FormLabel>
                 <Input
                     id='passwordConfirm'
                     type={'password'}
                     placeholder={'Type your password again'}
+                    color="white"
                     {...register('passwordConfirm')}
                 />
                 <FormErrorMessage>
