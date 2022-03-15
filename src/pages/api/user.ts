@@ -7,8 +7,8 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     const userRepository = new UserRepository();
-    let newuser = await userRepository.createUser(req.body);
-    console.log(newuser);
+    const {email, password, name} = req.body;
+    let newuser = await userRepository.createUser({email, password, name});
     res.json(newuser);
   } else {
     res.status(200).json({ body: 'get' });
