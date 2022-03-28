@@ -15,4 +15,15 @@ model User {
   email String  @unique
   password String 
   name  String?
+  listCard Card[] @relation("userCard")
+}
+
+model Card {
+  id    Int     @id @default(autoincrement())
+  name String  @unique
+  day DateTime 
+  tag String
+  resume String
+  user User @relation("userCard", fields: [userId], references: [id]) 
+  userId Int
 }
