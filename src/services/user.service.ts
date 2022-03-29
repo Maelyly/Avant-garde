@@ -1,4 +1,4 @@
-import { compareSync, hashSync } from 'bcrypt';
+import { compareSync } from 'bcrypt';
 import { ILogin, IUser } from '../@types/user';
 import { UserRepository } from '../repositories/user.repository';
 
@@ -20,9 +20,7 @@ export class UserService {
     const user = await this.userRepository.findByEmail(login.email);
     if (!user) return null;
 
-    const hashPassword = hashSync(login.password, 10);
-
-    const isAuthenticated = compareSync(hashPassword, user?.password);
+    const isAuthenticated = compareSync(login.password, user?.password);
 
     return isAuthenticated ? user : null;
   };
