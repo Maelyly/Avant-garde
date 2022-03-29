@@ -1,4 +1,5 @@
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -26,7 +27,8 @@ export const LoginForm: React.FC = () => {
 
         console.log('Login:', {email, password});
 
-        //await axios.post('/api/user', {email, name, password});
+        const user = await signIn('credentials-provider', {redirect: false, ...data});
+
     };
 
     return (
