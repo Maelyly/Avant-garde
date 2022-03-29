@@ -2,11 +2,6 @@ import NextAuth, { Session } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { UserService } from '../../../services/user.service';
 
-export interface ISessionUser {
-	id: string;
-	username: string;
-}
-
 const userService = new UserService();
 
 export default NextAuth({
@@ -16,8 +11,8 @@ export default NextAuth({
 			name: 'Credentials',
 			type: 'credentials',
 			credentials: {
-				username: {
-					label: 'Username',
+				email: {
+					label: 'Email',
 					type: 'text',
 					placeholder: 'test@email.com'
 				},
@@ -27,7 +22,7 @@ export default NextAuth({
 					placeholder: '*******'
 				}
 			},
-			authorize: async (credentials, req) => {
+			authorize: async (credentials) => {
 				const email = credentials?.email;
 				const password = credentials?.password;
 
@@ -54,7 +49,8 @@ export default NextAuth({
 				...session,
 				user: {
 					id: token.id as string,
-					email: token.email as string
+          email: token.email as string,
+          name: token.name as string,
 				}
 			};
 
