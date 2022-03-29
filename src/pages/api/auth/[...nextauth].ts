@@ -28,7 +28,7 @@ export default NextAuth({
 				}
 			},
 			authorize: async (credentials, req) => {
-				const email = credentials?.username;
+				const email = credentials?.email;
 				const password = credentials?.password;
 
 				if(!email || !password) return null;
@@ -43,12 +43,12 @@ export default NextAuth({
 	callbacks: {
 		jwt: async ({token, user}) => {
 			const newToken = {...token, ...user};
-      return newToken;
+			return newToken;
 		},
 		session: async (params) => {
 
 			let session = params.session;
-      let token = params.token;
+			let token = params.token;
 
 			let newSession = {
 				...session,
