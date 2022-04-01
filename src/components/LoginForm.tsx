@@ -2,6 +2,7 @@ import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from '@
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import AvantLogo from '/public/avant_white.png';
 
@@ -22,6 +23,8 @@ export const LoginForm: React.FC = () => {
         setError
     } = useForm<ILoginPayload>();
 
+    const history = useRouter();
+
     const onSubmit = async (data: ILoginPayload) => {
         const {email, password} = data;
 
@@ -29,6 +32,7 @@ export const LoginForm: React.FC = () => {
 
         const user = await signIn('credentials-provider', {redirect: false, ...data});
 
+        history.push('/');
     };
 
     return (

@@ -1,6 +1,7 @@
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 import axios from 'axios';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import AvantLogo from '/public/avant_white.png';
 
@@ -23,6 +24,8 @@ export const RegisterForm: React.FC = () => {
         setError
     } = useForm<IRegisterPayload>();
 
+    const history = useRouter();
+
     const onSubmit = async (data: IRegisterPayload) => {
         if(data.password !== data.passwordConfirm) {
             setError('passwordConfirm', {
@@ -33,6 +36,8 @@ export const RegisterForm: React.FC = () => {
         const {email, name, password} = data;
 
         await axios.post('/api/user', {email, name, password});
+
+        return history.push('/login');
     };
 
     return (
