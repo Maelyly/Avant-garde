@@ -1,6 +1,8 @@
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import AvantLogo from '/public/avant_white.png';
 
@@ -21,12 +23,16 @@ export const LoginForm: React.FC = () => {
         setError
     } = useForm<ILoginPayload>();
 
+    const history = useRouter();
+
     const onSubmit = async (data: ILoginPayload) => {
         const {email, password} = data;
 
         console.log('Login:', {email, password});
 
-        //await axios.post('/api/user', {email, name, password});
+        const user = await signIn('credentials-provider', {redirect: false, ...data});
+
+        history.push('/');
     };
 
     return (

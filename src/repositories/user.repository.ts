@@ -5,7 +5,7 @@ import { IUser } from '../@types/user';
 const prisma = new PrismaClient();
 
 export class UserRepository {
-  public createUser = (newUser: IUser) => {
+  public createUser = async (newUser: IUser) => {
 
     newUser.password = hashSync(newUser.password, 10);
     return prisma.user.create({
