@@ -37,12 +37,17 @@ export class CardRepository {
     });
     return card;
   };
-  public findByUser = async (user: User) => {
-    const card = await prisma.card.findFirst({
+  public findAllByUser = async (user: User) => {
+    const card = await prisma.card.findMany({
       where: {
         user,
       },
     });
+    return card;
+  };
+
+  public findAll = async () => {
+    const card = await prisma.card.findMany();
     return card;
   };
   //   public findByStatus = async (status: string) => {
