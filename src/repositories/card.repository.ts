@@ -1,5 +1,4 @@
 import { PrismaClient, User } from '.prisma/client';
-import { hashSync } from 'bcrypt';
 import { ICard } from '../@types/card';
 
 const prisma = new PrismaClient();
