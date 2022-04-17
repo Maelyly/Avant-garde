@@ -6,9 +6,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === 'POST') {
-    const { userId } = req.body;
+    const { userId, status } = req.body;
     const cardService = new CardService();
-    const posts = await cardService.findAllByUser(userId);
+    const posts = await cardService.findAllByStatus(userId, status);
     res.json(posts);
   } else {
     res.status(200).json({ body: 'just post available' });
