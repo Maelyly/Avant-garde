@@ -15,7 +15,6 @@ model User {
   email String  @unique
   password String 
   name  String?
-  listCard Card[] @relation("userCard")
 }
 
 model Card {
@@ -24,6 +23,6 @@ model Card {
   day DateTime 
   tag String
   resume String
-  user User @relation("userCard", fields: [userId], references: [id]) 
+  status String
   userId Int
 }

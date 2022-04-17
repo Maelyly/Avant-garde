@@ -1,10 +1,9 @@
-import { IUser } from './user';
-
 export interface ICard {
+  id?: number,
   name: string;
   day: Date;
   tag: string;
   resume: string;
-  user: IUser;
+  userId: Number;
   status: string;
 }
