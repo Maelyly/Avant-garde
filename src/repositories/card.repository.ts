@@ -1,45 +1,48 @@
 import { PrismaClient, User } from '.prisma/client';
-import { ICard } from '../@types/card';
 
 const prisma = new PrismaClient();
 
 export class CardRepository {
-  public createCard = (newCard: ICard) => {
+  public createCard = (newCard: any) => {
     return prisma.card.create({
       data: newCard,
     });
   };
 
-  public findByName = async (name: string) => {
+  public findByName = async (userId: number, name: string) => {
     const card = await prisma.card.findFirst({
       where: {
+        userId,
         name,
       },
     });
     return card;
   };
 
-  public findByTag = async (tag: string) => {
-    const card = await prisma.card.findFirst({
+  public findAllByTag = async (userId: number, tag: string) => {
+    const card = await prisma.card.findMany({
       where: {
+        userId,
         tag,
       },
     });
     return card;
   };
 
-  public findByDay = async (day: Date) => {
-    const card = await prisma.card.findFirst({
+  public findAllByDay = async (userId: number, day: Date) => {
+    const card = await prisma.card.findMany({
       where: {
+        userId,
         day,
       },
     });
     return card;
   };
-  public findAllByUser = async (user: User) => {
+
+  public findAllByUser = async (userId: number) => {
     const card = await prisma.card.findMany({
       where: {
-        user,
+        userId,
       },
     });
     return card;
@@ -49,12 +52,14 @@ export class CardRepository {
     const card = await prisma.card.findMany();
     return card;
   };
-  //   public findByStatus = async (status: string) => {
-  //     const card = await prisma.card.findFirst({
-  //       where: {
-  //         status,
-  //       },
-  //     });
-  //     return card;
-  //   };
+
+  public findAllByStatus = async (userId: number, status: string) => {
+    const card = await prisma.card.findMany({
+      where: {
+        userId,
+        status,
+      },
+    });
+    return card;
+  };
 }

@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { CardService } from '../../services/card.service';
-import { UserService } from '../../services/user.service';
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,14 +7,14 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     const cardService = new CardService();
-    const { name, day, tag, resume, user, status } = req.body;
+    const { name, day, tag, resume, userId, status } = req.body;
     let newcard = await cardService.createCard({
-      name,
-      day,
-      tag,
-      resume,
-      user,
-      status,
+        name,
+        day: new Date(day),
+        tag,
+        resume,
+        userId,
+        status,
     });
     res.json(newcard);
   } else if (req.method === 'GET') {
