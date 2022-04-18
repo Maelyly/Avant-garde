@@ -16,3 +16,13 @@ model User {
   password String 
   name  String?
 }
+
+model Card {
+  id    Int     @id @default(autoincrement())
+  name String  @unique
+  day DateTime 
+  tag String
+  resume String
+  status String
+  userId Int
+}
