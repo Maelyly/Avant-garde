@@ -14,6 +14,6 @@ export default async function handler(
     }
     res.json(newUser);
   } else {
-    res.status(200).json({ body: 'get' });
+    res.status(503).json({ body: 'get' });
   }
 }
