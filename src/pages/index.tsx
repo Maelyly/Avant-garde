@@ -1,12 +1,26 @@
 import { Button, Flex, Heading } from '@chakra-ui/react';
+import axios from 'axios';
 import type { GetServerSideProps, NextPage } from 'next';
 import { getSession, signOut } from 'next-auth/react';
 import App from 'next/app';
 import Head from 'next/head';
+import { useEffect } from 'react';
 import { IUser } from '../@types/user';
 import { AppBar } from '../components/AppBar';
 
 const Home: NextPage<IUser> = (props) => {
+
+  useEffect(() => {
+    getCards();
+  });
+
+  const getCards = async () => {
+    const response =  await axios.get('/api/card');
+
+    const data = response.data;
+
+    console.log('Data:', data);
+  };
 
   return (
     <>
