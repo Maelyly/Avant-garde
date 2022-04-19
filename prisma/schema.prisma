@@ -20,7 +20,7 @@ model User {
 
 model Card {
   id    Int     @id @default(autoincrement())
-  name String  @unique
+  name String
   day DateTime 
   tag String
   resume String
