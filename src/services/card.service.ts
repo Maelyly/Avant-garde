@@ -18,7 +18,7 @@ export class CardService {
   public findAllByStatus = (userId: number, status: string) => {
     return this.cardRepository.findAllByStatus(userId, status);
   };
-  public findAll = () => {
-    return this.cardRepository.findAll();
+  public findAll = (id: number) => {
+    return this.cardRepository.findAllByUser(id);
   };
 }

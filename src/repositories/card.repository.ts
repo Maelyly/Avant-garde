@@ -1,4 +1,4 @@
-import { PrismaClient, User } from '.prisma/client';
+import { PrismaClient } from '.prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -44,6 +44,13 @@ export class CardRepository {
       where: {
         userId,
       },
+      select: {
+        day: true,
+        name: true,
+        resume: true,
+        status: true,
+        tag: true
+      }
     });
     return card;
   };
