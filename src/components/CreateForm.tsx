@@ -1,14 +1,12 @@
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, Select } from '@chakra-ui/react';
-import axios from 'axios';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import AvantLogo from '/public/avant_white.png';
 
 type ICreateCardPayload = {
     name: string;
     description: string;
     type: string;
+    tag: string;
 }
 
 export const CreateForm: React.FC = () => {
@@ -26,6 +24,7 @@ export const CreateForm: React.FC = () => {
     const history = useRouter();
 
     const onSubmit = async (data: ICreateCardPayload) => {
+        console.log('Data:', data);
     };
 
     return (
@@ -41,7 +40,12 @@ export const CreateForm: React.FC = () => {
                 <FormLabel color="white">
                     Task Type
                 </FormLabel>
-                <Select id='type' placeholder='Select task type...'  bg={'white'}>
+                <Select
+                    id='type'
+                    placeholder='Select task type...'
+                    bg={'white'}
+                    {...register('tag')}
+                >
                     <option value='Work' > Work </option>
                     <option value='Studies' > Studies </option>
                     <option value='Social' > Social </option>
