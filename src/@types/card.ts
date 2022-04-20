@@ -1,5 +1,7 @@
+import { Status, Tag } from '@prisma/client';
+
 export interface ICard {
-  id?: number,
+  id?: number;
   name: string;
   day: Date;
   tag: string;
@@ -8,11 +10,10 @@ export interface ICard {
   status: string;
 }
 
-
-export interface ICardCreationBody {
+export interface ICardCreate {
   name: string;
-  day: Date;
-  tag: string;
+  day: string;
+  tag: Tag;
   resume: string;
-  status: string;
+  status: Status;
 }

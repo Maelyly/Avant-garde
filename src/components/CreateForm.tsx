@@ -1,12 +1,14 @@
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, Select } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
 type ICreateCardPayload = {
     name: string;
-    description: string;
+    resume: string;
     type: string;
     tag: string;
+    day: string;
+    status: string;
 }
 
 export const CreateForm: React.FC = () => {
@@ -21,10 +23,21 @@ export const CreateForm: React.FC = () => {
         setError
     } = useForm<ICreateCardPayload>();
 
-    const history = useRouter();
-
     const onSubmit = async (data: ICreateCardPayload) => {
-        console.log('Data:', data);
+
+        const date = new Date(data.day);
+
+        data.day = (new Date(
+            date.getUTCFullYear(),
+            date.getUTCMonth(),
+            date.getUTCDate()
+        )).toISOString();
+
+        data.status = 'Incomplete';
+
+        const response = await axios.post('/api/card', data);
+
+        console.log('Res:', response);
     };
 
     return (
@@ -73,14 +86,24 @@ export const CreateForm: React.FC = () => {
                     Description
                 </FormLabel>
                 <Input
-                    id='description'
+                    id='resume'
                     placeholder='New task description...'
                     color="white"
-                    {...register('description')}
+                    {...register('resume')}
                 />
                 <FormErrorMessage>
-                    {errors.description && errors.description.message}
+                    {errors.resume && errors.resume.message}
                 </FormErrorMessage>
+            </FormControl>
+            <FormControl>
+                <FormLabel>
+                    Date
+                </FormLabel>
+                <Input
+                    type={'date'}
+                    color={'white'}
+                    {...register('day')}
+                />
             </FormControl>
             <Button mt={4} isLoading={isSubmitting} type='submit'>
                 Create

@@ -1,16 +1,32 @@
-import { PrismaClient, User } from '.prisma/client';
+import { PrismaClient } from '.prisma/client';
+import { ICardCreate } from '../@types/card';
+import { Status, Tag } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export class CardRepository {
-  public createCard = (newCard: any) => {
-    return prisma.card.create({
-      data: newCard,
+  public createCard = async (
+    userId: number,
+    { day, tag, name, resume, status }: ICardCreate
+  ) => {
+    return await prisma.card.create({
+      data: {
+        day,
+        tag,
+        status,
+        name,
+        resume,
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
     });
   };
-  public filter = async (userId: number, data: any) => {
+  public filter = async (userId: number, filter: any) => {
     const card = await prisma.card.findMany({
-      where: data,
+      where: filter,
     });
     return card;
   };
@@ -31,7 +47,7 @@ export class CardRepository {
     return card;
   };
 
-  public findAllByTag = async (userId: number, tag: string) => {
+  public findAllByTag = async (userId: number, tag: Tag) => {
     const card = await prisma.card.findMany({
       where: {
         userId,
@@ -95,7 +111,7 @@ export class CardRepository {
     return card;
   };
 
-  public findAllByStatus = async (userId: number, status: string) => {
+  public findAllByStatus = async (userId: number, status: Status) => {
     const card = await prisma.card.findMany({
       where: {
         userId,
