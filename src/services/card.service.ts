@@ -15,10 +15,16 @@ export class CardService {
   public findAllByTag = (userId: number, tag: string) => {
     return this.cardRepository.findAllByTag(userId, tag);
   };
+  public findAllByName = (userId: number, name: string) => {
+    return this.cardRepository.findAllByName(userId, name);
+  };
   public findAllByStatus = (userId: number, status: string) => {
     return this.cardRepository.findAllByStatus(userId, status);
   };
-  public findAll = (id: number) => {
-    return this.cardRepository.findAllByUser(id);
+  public findAllById = (userId: number, id: number) => {
+    return this.cardRepository.findAllById(userId, id);
   };
+  // public find = (data: any) => {
+  //   return this.cardRepository.find(data);
+  // };
 }
