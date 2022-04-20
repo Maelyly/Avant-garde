@@ -31,10 +31,15 @@ model Card {
 
 enum Status {
   Complete
+  Doing
+  Pause
   Incomplete
 }
 
 enum Tag {
   Work
   Study
+  Health
+  SocialLife
+
 }

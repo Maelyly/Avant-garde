@@ -8,7 +8,7 @@ export class CardRepository {
       data: newCard,
     });
   };
-  public filter = async (data: any) => {
+  public filter = async (userId: number, data: any) => {
     const card = await prisma.card.findMany({
       where: data,
     });
