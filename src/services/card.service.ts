@@ -24,7 +24,7 @@ export class CardService {
   public findAllById = (userId: number, id: number) => {
     return this.cardRepository.findAllById(userId, id);
   };
-  // public find = (data: any) => {
-  //   return this.cardRepository.find(data);
-  // };
+  public filter = (data: any) => {
+    return this.cardRepository.filter(data);
+  };
 }

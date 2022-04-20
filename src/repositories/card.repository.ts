@@ -8,20 +8,12 @@ export class CardRepository {
       data: newCard,
     });
   };
-  // public find = async (data: any) => {
-  //   const { name, day, tag, resume, userId, status } = data;
-  //   const card = await prisma.card.findMany({
-  //     where: {
-  //       name: name != '' ? name : null,
-  //       day: day != '' ? day : null,
-  //       tag: tag != '' ? tag : null,
-  //       resume: resume != '' ? resume : null,
-  //       userId: userId != '' ? userId : null,
-  //       status: status != '' ? status : null,
-  //     },
-  //   });
-  //   return card;
-  // };
+  public filter = async (data: any) => {
+    const card = await prisma.card.findMany({
+      where: data,
+    });
+    return card;
+  };
   public findAllByName = async (userId: number, name: string) => {
     const card = await prisma.card.findFirst({
       where: {

@@ -1,55 +1,36 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { CardService } from '../../../services/card.service';
-import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
+import { CardService } from '../../../services/card.service';
 
-export default async function Handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const router = useRouter();
-  const session = await getSession();
+  const session = await getSession({ req });
 
   const user = session?.user;
 
+  if (!user) return res.status(401).send('Not logged in');
+
+  const cardService = new CardService();
+
   if (req.method === 'POST') {
-    const cardService = new CardService();
-    const { name, day, tag, resume, userId, status } = req.body;
-    let dayS = new Date(day);
-    try {
-      let newCard = await cardService.createCard({
-        name,
-        day: dayS,
-        tag,
-        resume,
-        userId,
-        status,
-      });
-      res.json(newCard);
-    } catch (e) {
-      console.log('Erro ');
-      console.log(e);
-    }
+    const { name, day, tag, resume, status } = req.body;
+    const userId = user.id;
+    const newCard = await cardService.createCard({
+      name,
+      day: new Date(day),
+      tag,
+      resume,
+      userId,
+      status,
+    });
+    res.json(newCard);
   } else if (req.method === 'GET') {
-    const cardService = new CardService();
-    try {
-      const data = router.query;
-      console.log(data);
-      // let newCard = await cardService.findAllById(user.);
-      // res.json(newCard);
-    } catch (e) {
-      console.log('Erro ');
-      console.log(e);
-    }
+    const cards = await cardService.findAllByUser(user.id);
+
+    return res.status(200).json(cards);
   } else {
-    res.status(503).json({ body: 'not get or post' });
+    return res.status(405).send('Only GET and POST allowed');
   }
-  //   if (req.method === 'POST') {
-  //     const { userId, status } = req.body;
-  //     const cardService = new CardService();
-  //     const posts = await cardService.findAllByStatus(userId, status);
-  //     res.json(posts);
-  //   } else {
-  //     res.status(200).json({ body: 'just post available' });
-  //   }
 }
