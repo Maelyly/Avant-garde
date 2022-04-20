@@ -1,10 +1,11 @@
+import { ICardCreate } from '../@types/card';
 import { CardRepository } from '../repositories/card.repository';
 
 export class CardService {
   private cardRepository = new CardRepository();
 
-  public createCard = (card: any) => {
-    return this.cardRepository.createCard(card);
+  public createCard = (userId: number, card: ICardCreate) => {
+    return this.cardRepository.createCard(userId, card);
   };
   public findAllByUser = (userId: number) => {
     return this.cardRepository.findAllByUser(userId);

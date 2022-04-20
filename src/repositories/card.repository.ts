@@ -1,11 +1,23 @@
 import { PrismaClient } from '.prisma/client';
+import { ICardCreate } from '../@types/card';
 
 const prisma = new PrismaClient();
 
 export class CardRepository {
-  public createCard = (newCard: any) => {
-    return prisma.card.create({
-      data: newCard,
+  public createCard = async (userId: number, {day, tag, name, resume, status}: ICardCreate) => {
+    return await prisma.card.create({
+      data: {
+        day,
+        tag,
+        status,
+        name,
+        resume,
+        user: {
+          connect: {
+            id: userId
+          }
+        }
+      }
     });
   };
 

@@ -18,12 +18,11 @@ export default async function handler(
     if (req.method === 'POST') {
         const { name, day, tag, resume, status } = req.body;
         const userId = user.id;
-        const newCard = await cardService.createCard({
+        const newCard = await cardService.createCard(userId, {
             name,
-            day: new Date(day),
+            day,
             tag,
             resume,
-            userId,
             status,
         });
         res.json(newCard);
