@@ -28,6 +28,13 @@ export class CardRepository {
         userId,
         name,
       },
+      select: {
+        day: true,
+        name: true,
+        resume: true,
+        status: true,
+        tag: true,
+      },
     });
     return card;
   };
@@ -37,6 +44,13 @@ export class CardRepository {
       where: {
         userId,
         tag,
+      },
+      select: {
+        day: true,
+        name: true,
+        resume: true,
+        status: true,
+        tag: true,
       },
     });
     return card;
@@ -48,6 +62,13 @@ export class CardRepository {
         userId,
         day,
       },
+      select: {
+        day: true,
+        name: true,
+        resume: true,
+        status: true,
+        tag: true,
+      },
     });
     return card;
   };
@@ -57,12 +78,28 @@ export class CardRepository {
       where: {
         userId,
       },
+      select: {
+        day: true,
+        name: true,
+        resume: true,
+        status: true,
+        tag: true,
+      },
     });
     return card;
   };
 
   public findAllById = async (userId: number, id: number) => {
-    const card = await prisma.card.findMany({ where: { id, userId } });
+    const card = await prisma.card.findMany({
+      where: { id, userId },
+      select: {
+        day: true,
+        name: true,
+        resume: true,
+        status: true,
+        tag: true,
+      },
+    });
     return card;
   };
 
@@ -71,6 +108,13 @@ export class CardRepository {
       where: {
         userId,
         status,
+      },
+      select: {
+        day: true,
+        name: true,
+        resume: true,
+        status: true,
+        tag: true,
       },
     });
     return card;
