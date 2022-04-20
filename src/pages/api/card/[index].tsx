@@ -27,7 +27,9 @@ export default async function handler(
     });
     res.json(newCard);
   } else if (req.method === 'GET') {
+    const data = req.query;
     const cards = await cardService.findAllByUser(user.id);
+    const cardsFilter = await cardService.filter(data);
 
     return res.status(200).json(cards);
   } else {
