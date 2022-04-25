@@ -28,8 +28,6 @@ export const LoginForm: React.FC = () => {
     const onSubmit = async (data: ILoginPayload) => {
         const {email, password} = data;
 
-        console.log('Login:', {email, password});
-
         const user = await signIn('credentials-provider', {redirect: false, ...data});
 
         history.push('/');

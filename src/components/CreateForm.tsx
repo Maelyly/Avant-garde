@@ -36,8 +36,6 @@ export const CreateForm: React.FC = () => {
         data.status = 'Incomplete';
 
         const response = await axios.post('/api/card', data);
-
-        console.log('Res:', response);
     };
 
     return (

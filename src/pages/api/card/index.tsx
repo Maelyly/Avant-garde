@@ -30,7 +30,6 @@ export default async function handler(
     } else if (req.method === 'GET') {
 
       const data = req.query;
-      console.log('data', data);
       const jsonData: { [key: string]: string | string[] | number } = {};
       Object.keys(data).map(key => {
         jsonData[key] = data[key];
@@ -45,7 +44,6 @@ export default async function handler(
       return res.status(405).send('Only GET and POST allowed');
     }
   } catch (error) {
-    console.log(error);
     res.status(500).send(error);
   }
 }
