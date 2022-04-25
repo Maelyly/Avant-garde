@@ -48,7 +48,7 @@ export default NextAuth({
 			let newSession = {
 				...session,
 				user: {
-					id: token.id as string,
+					id: token.id as number,
           email: token.email as string,
           name: token.name as string,
 				}

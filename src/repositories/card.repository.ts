@@ -26,7 +26,8 @@ export class CardRepository {
   };
   public filter = async (userId: number, filter: any) => {
     const card = await prisma.card.findMany({
-      where: filter,
+      where:
+        filter,
     });
     return card;
   };
