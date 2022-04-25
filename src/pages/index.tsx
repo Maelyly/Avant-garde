@@ -1,14 +1,17 @@
-import { Button, Flex, Heading } from '@chakra-ui/react';
+import { Flex, Spinner } from '@chakra-ui/react';
 import axios from 'axios';
 import type { GetServerSideProps, NextPage } from 'next';
-import { getSession, signOut } from 'next-auth/react';
-import App from 'next/app';
+import { getSession } from 'next-auth/react';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { ICard } from '../@types/card';
 import { IUser } from '../@types/user';
 import { AppBar } from '../components/AppBar';
+import { TaskCard } from '../components/TaskCard';
 
 const Home: NextPage<IUser> = (props) => {
+
+  const [tasks, setTasks] = useState<ICard[] | null>(null);
 
   useEffect(() => {
     getCards();
@@ -19,7 +22,7 @@ const Home: NextPage<IUser> = (props) => {
 
     const data = response.data;
 
-    console.log('Data:', data);
+    setTasks(data);
   };
 
   return (
@@ -30,16 +33,11 @@ const Home: NextPage<IUser> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppBar></AppBar>
-      <Flex w={'100vw'} h={'100vh'} bgColor={'gray.600'} justify={'center'} align={'center'}>
-        <Flex w={'lg'} h={'xs'} flexDir={'column'} align={'center'} justify={'space-around'}>
-          <Heading color={'gray.100'}>
-            Welcome {props.name}
-          </Heading>
-          <Button onClick={() => {
-            signOut();
-          }}>
-            Log out
-          </Button>
+      <Flex w={'100vw'} h={'calc(100vh - 70px)'} bgColor={'gray.600'} justify={'center'} align={'center'}>
+        <Flex w={'60%'} h={'80%'} flexDir={'column'} align={'stretch'} bgColor={'gray.800'} borderRadius={'lg'} overflowY={'scroll'}>
+          {
+            tasks === null ? <Spinner /> : tasks.map(task => <TaskCard key={task.id} task={task}/>)
+          }
         </Flex>
       </Flex>
     </>
