@@ -1,15 +1,14 @@
 import { Button, Flex, HStack } from '@chakra-ui/react';
+import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Home from '../pages';
 import AvantLogo from '/public/avant_white.png';
-import { signOut } from 'next-auth/react';
 
 export const AppBar: React.FC = () => {
 
     return (
         <Flex
-        position={'absolute'}
+        position={'sticky'}
         top={'0'}
         flexDir={'row'}
         align={'top'}
@@ -24,11 +23,11 @@ export const AppBar: React.FC = () => {
                     <Button bg='blue.900' color='white' border='0px' h='70px' borderRadius={'0'} _hover={{bg: '#173685'}}>Home</Button>
                 </Link>
                 <Link href={'/create'}>
-                <Button bg='blue.900' color='white' border='0px' h='70px' borderRadius={'0'} _hover={{bg: '#173685'}}>Create Task</Button>                
+                <Button bg='blue.900' color='white' border='0px' h='70px' borderRadius={'0'} _hover={{bg: '#173685'}}>Create Task</Button>
                 </Link>
                 <Button bg='blue.900' color='white' border='0px' h='70px' borderRadius={'0'} _hover={{bg: '#173685'}}>Task List</Button>
                 <Button bg='blue.900' color='white' border='0px' h='70px' borderRadius={'0'} _hover={{bg: '#173685'}} onClick={() => {signOut();}}>Logout</Button>
-            </HStack>    
+            </HStack>
         </Flex>
     );
 };
