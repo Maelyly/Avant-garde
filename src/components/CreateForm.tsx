@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 type ICreateCardPayload = {
     name: string;
     resume: string;
-    type: string;
     tag: string;
     day: string;
     status: string;
@@ -58,11 +57,12 @@ export const CreateForm: React.FC = () => {
                     {...register('tag')}
                 >
                     <option value='Work' > Work </option>
-                    <option value='Studies' > Studies </option>
-                    <option value='Social' > Social </option>
+                    <option value='Study' > Studies </option>
+                    <option value='SocialLife' > Social </option>
+                    <option value='Health' > Health </option>
                 </Select>
                 <FormErrorMessage>
-                    {errors.type && errors.type.message}
+                    {errors.tag && errors.tag.message}
                 </FormErrorMessage>
             </FormControl>
             <FormControl>
@@ -94,7 +94,7 @@ export const CreateForm: React.FC = () => {
                 </FormErrorMessage>
             </FormControl>
             <FormControl>
-                <FormLabel>
+                <FormLabel color="white">
                     Date
                 </FormLabel>
                 <Input
