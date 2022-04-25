@@ -1,25 +1,32 @@
+import { Status, Tag } from '@prisma/client';
 import { ICardCreate } from '../@types/card';
 import { CardRepository } from '../repositories/card.repository';
 
 export class CardService {
   private cardRepository = new CardRepository();
 
-  public createCard = (userId: number, card: ICardCreate) => {
-    return this.cardRepository.createCard(userId, card);
+  public createCard = async (userId: number, card: ICardCreate) => {
+    return await this.cardRepository.createCard(userId, card);
   };
-  public findAllByUser = (userId: number) => {
-    return this.cardRepository.findAllByUser(userId);
+  public findAllByUser = async (userId: number) => {
+    return await this.cardRepository.findAllByUser(userId);
   };
-  public findAllByDay = (userId: number, day: string) => {
-    return this.cardRepository.findAllByDay(userId, new Date(day));
+  public findAllByDay = async (userId: number, day: string) => {
+    return await this.cardRepository.findAllByDay(userId, new Date(day));
   };
-  public findAllByTag = (userId: number, tag: string) => {
-    return this.cardRepository.findAllByTag(userId, tag);
+  public findAllByTag = async (userId: number, tag: string) => {
+    return await this.cardRepository.findAllByTag(userId, tag as Tag);
   };
-  public findAllByStatus = (userId: number, status: string) => {
-    return this.cardRepository.findAllByStatus(userId, status);
+  public findAllByName = async (userId: number, name: string) => {
+    return await this.cardRepository.findAllByName(userId, name);
   };
-  public findAll = (id: number) => {
-    return this.cardRepository.findAllByUser(id);
+  public findAllByStatus = async (userId: number, status: string) => {
+    return await this.cardRepository.findAllByStatus(userId, status as Status);
+  };
+  public findAllById = async (userId: number, id: number) => {
+    return await this.cardRepository.findAllById(userId, id);
+  };
+  public filter = async (userId: number, data: any) => {
+    return await this.cardRepository.filter(userId, data);
   };
 }
