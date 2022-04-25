@@ -4,10 +4,10 @@ export interface ICard {
   id?: number;
   name: string;
   day: Date;
-  tag: string;
+  tag: Tag;
   resume: string;
   userId: Number;
-  status: string;
+  status: Status;
 }
 
 export interface ICardCreate {
