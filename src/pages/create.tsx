@@ -1,4 +1,4 @@
-import { Flex, Heading} from '@chakra-ui/react';
+import { Flex, Heading } from '@chakra-ui/react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { AppBar } from '../components/AppBar';
@@ -10,15 +10,15 @@ const CreateCard: NextPage = (props) => {
         <Head>
             <title>Avant-Garde</title>
         </Head>
+            <AppBar />
             <Flex
                 align={'top'}
                 justify={'center'}
                 w={'100%'}
-                h={'100vh'}
+                h={'calc(100vh - 70px)'}
                 bg={'gray.600'}
                 direction={'column'}
             >
-                <AppBar></AppBar>
                 <Flex
                 align={'center'}
                 justify={'left'}
