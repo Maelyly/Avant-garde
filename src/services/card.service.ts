@@ -26,7 +26,13 @@ export class CardService {
   public findAllById = async (userId: number, id: number) => {
     return await this.cardRepository.findAllById(userId, id);
   };
-  public filter = async (userId: number, data: any) => {
-    return await this.cardRepository.filter(userId, data);
+  public filter = async (data: any) => {
+    return await this.cardRepository.filter(data);
+  };
+  public updateCard = async (data: any) => {
+    return await this.cardRepository.updateCard(data);
+  };
+  public deleteCard = async (id: number) => {
+    return await this.cardRepository.deleteCard(id);
   };
 }
