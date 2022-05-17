@@ -8,6 +8,7 @@ export interface ICard {
   resume: string;
   userId: Number;
   status: Status;
+  prioritize: Boolean,
 }
 
 export interface ICardCreate {

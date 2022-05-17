@@ -24,7 +24,7 @@ export class CardRepository {
       },
     });
   };
-  public filter = async (userId: number, filter: any) => {
+  public filter = async (filter: any) => {
     const card = await prisma.card.findMany({
       where:
         filter,
@@ -43,6 +43,7 @@ export class CardRepository {
         resume: true,
         status: true,
         tag: true,
+        prioritize: true,
       },
     });
     return card;
@@ -60,6 +61,7 @@ export class CardRepository {
         resume: true,
         status: true,
         tag: true,
+        prioritize: true,
       },
     });
     return card;
@@ -77,6 +79,7 @@ export class CardRepository {
         resume: true,
         status: true,
         tag: true,
+        prioritize: true,
       },
     });
     return card;
@@ -93,6 +96,7 @@ export class CardRepository {
         resume: true,
         status: true,
         tag: true,
+        prioritize: true,
       },
     });
     return card;
@@ -107,6 +111,7 @@ export class CardRepository {
         resume: true,
         status: true,
         tag: true,
+        prioritize: true,
       },
     });
     return card;
@@ -124,8 +129,24 @@ export class CardRepository {
         resume: true,
         status: true,
         tag: true,
+        prioritize: true,
       },
     });
     return card;
+  };
+  public updateCard = async (data: any) => {
+    const id = data.id;
+    const card = await prisma.card.update({
+      where: { id },
+      data: data,
+    });
+    return card;
+  };
+
+  public deleteCard = async (id: number) => {
+    console.log('delleting id', id);
+    await prisma.card.delete({
+      where: { id },
+    });
   };
 }
