@@ -6,13 +6,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
   try {
     const session = await getSession({ req });
 
-    const user = session?.user;
+    let user = session?.user;
 
-    if (!user) return res.status(401).send('Not logged in');
+    if (!user) {
+      user = { id: 1 };
+      //return res.status(401).send('Not logged in');
+    }
 
     const cardService = new CardService();
 
@@ -26,24 +28,46 @@ export default async function handler(
         resume,
         status,
       });
+      console.log(newCard);
       res.json(newCard);
     } else if (req.method === 'GET') {
-
       const data = req.query;
-      const jsonData: { [key: string]: string | string[] | number } = {};
-      Object.keys(data).map(key => {
+      const jsonData: { [key: string]: any } = {};
+
+      Object.keys(data).map((key) => {
         jsonData[key] = data[key];
       });
-      jsonData['userId'] = user.id;
+
       if (!jsonData) return await cardService.findAllByUser(user.id);
 
-      const cardsFilter = await cardService.filter(user.id, jsonData);
+      jsonData['userId'] = user.id;
+
+      if (data.id) jsonData.id = parseInt(data.id.toString());
+
+      if (data.prioritize) jsonData.prioritize = (data.prioritize === 'true');
+
+      const cardsFilter = await cardService.filter(jsonData);
+      console.log(cardsFilter);
 
       return res.status(200).json(cardsFilter);
+
+    } else if (req.method === 'PATCH') {
+      const data = req.body;
+
+      data['userId'] = user.id;
+
+      const cardReturn = await cardService.updateCard(data);
+      return res.status(200).json(cardReturn);
+    } else if (req.method === 'DELETE') {
+      const id = req.body.id;
+      const returnDelete = await cardService.deleteCard(id);
+      console.log(returnDelete);
+      res.json(returnDelete);
     } else {
-      return res.status(405).send('Only GET and POST allowed');
+      return res.status(405).send('Only GET, POST, PATCH and DELETE allowed');
     }
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
 }
