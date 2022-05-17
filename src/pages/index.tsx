@@ -1,4 +1,5 @@
-import { Flex, Spinner } from '@chakra-ui/react';
+import { Button, Flex, Spinner, MenuList, Select, MenuItem, MenuDivider, Menu, MenuButton } from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import type { GetServerSideProps, NextPage } from 'next';
 import { getSession } from 'next-auth/react';
@@ -7,15 +8,32 @@ import { useEffect, useState } from 'react';
 import { ICard } from '../@types/card';
 import { IUser } from '../@types/user';
 import { AppBar } from '../components/AppBar';
+import { Filter } from '../components/FilterButtons';
 import { TaskCard } from '../components/TaskCard';
 
 const Home: NextPage<IUser> = (props) => {
 
   const [tasks, setTasks] = useState<ICard[] | null>(null);
+  const [item, setItem] = useState<string | null>();
+
+  const getFiltered = async () => {
+    let response;
+
+    if(item != ''){
+      response =  await axios.get(`/api/card?tag=${item}`);
+    }
+    else{
+      response =  await axios.get('/api/card');
+    }
+
+    const data = response.data;
+
+    setTasks(data);
+  };
 
   useEffect(() => {
-    getCards();
-  });
+    getFiltered();
+  },[]);
 
   const getCards = async () => {
     const response =  await axios.get('/api/card');
@@ -33,7 +51,8 @@ const Home: NextPage<IUser> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppBar></AppBar>
-      <Flex w={'100vw'} h={'calc(100vh - 70px)'} bgColor={'gray.600'} justify={'center'} align={'center'}>
+      <Flex w={'100vw'} h={'calc(100vh - 70px)'} flexDir={'column'} bgColor={'gray.600'} justify={'center'} align={'center'}>
+      <Filter setItem={setItem} filtrar={getFiltered}></Filter>
         <Flex w={'60%'} h={'80%'} flexDir={'column'} align={'stretch'} bgColor={'gray.800'} borderRadius={'lg'} overflowY={'scroll'}>
           {
             tasks === null ? <Spinner /> : tasks.map(task => <TaskCard key={task.id} task={task}/>)
