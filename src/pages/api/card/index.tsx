@@ -11,10 +11,7 @@ export default async function handler(
 
     let user = session?.user;
 
-    if (!user) {
-      user = { id: 1 };
-      //return res.status(401).send('Not logged in');
-    }
+    if (!user) return res.status(401).send('Not logged in');
 
     const cardService = new CardService();
 
