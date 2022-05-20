@@ -1,5 +1,4 @@
-import { Button, Flex, Spinner, MenuList, Select, MenuItem, MenuDivider, Menu, MenuButton } from '@chakra-ui/react';
-import { HamburgerIcon } from '@chakra-ui/icons';
+import { Flex, Spinner } from '@chakra-ui/react';
 import axios from 'axios';
 import type { GetServerSideProps, NextPage } from 'next';
 import { getSession } from 'next-auth/react';
@@ -53,7 +52,7 @@ const Home: NextPage<IUser> = (props) => {
       <AppBar></AppBar>
       <Flex w={'100vw'} h={'calc(100vh - 70px)'} flexDir={'column'} bgColor={'gray.600'} justify={'center'} align={'center'}>
       <Filter setItem={setItem} filtrar={getFiltered}></Filter>
-        <Flex w={'60%'} h={'80%'} flexDir={'column'} align={'stretch'} bgColor={'gray.800'} borderRadius={'lg'} overflowY={'scroll'}>
+        <Flex w={'60%'} h={'80%'} flexDir={'column'} align={'stretch'} bgColor={'gray.800'} borderRadius={'lg'}>
           {
             tasks === null ? <Spinner /> : tasks.map(task => <TaskCard key={task.id} task={task}/>)
           }

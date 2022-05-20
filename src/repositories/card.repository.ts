@@ -1,6 +1,6 @@
 import { PrismaClient } from '.prisma/client';
-import { ICardCreate } from '../@types/card';
 import { Status, Tag } from '@prisma/client';
+import { ICardCreate } from '../@types/card';
 
 const prisma = new PrismaClient();
 
@@ -25,6 +25,11 @@ export class CardRepository {
     });
   };
   public filter = async (filter: any) => {
+
+    if(filter.tag === 'undefined') {
+      delete filter.tag;
+    }
+
     const card = await prisma.card.findMany({
       where:
         filter,
